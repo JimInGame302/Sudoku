@@ -26,7 +26,7 @@
         android:id="@+id/gridLayoutTablero"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/time"
-        android:layout_width="350dp"
+        android:layout_width="355dp"
         android:layout_height="500dp"
         android:columnCount="9"
         android:orientation="horizontal"

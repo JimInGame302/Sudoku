@@ -1,5 +1,6 @@
 package com.example.sudoku.Logic
 
+import android.content.res.Resources
 import android.widget.EditText
 import android.widget.GridLayout
 import com.example.sudoku.R
@@ -13,9 +14,10 @@ class CreateBoard {
                 editText.gravity = android.view.Gravity.CENTER
                 editText.setBackgroundResource(R.drawable.borde_casillas)
                 val layoutParams = GridLayout.LayoutParams()
+                layoutParams.height = (Resources.getSystem().displayMetrics.widthPixels/8)
+                layoutParams.width = (Resources.getSystem().displayMetrics.widthPixels/10)
                 layoutParams.rowSpec = GridLayout.spec(i)
                 layoutParams.columnSpec = GridLayout.spec(j)
-                //layoutParams.setMargins(4, 4, 4, 4)
                 editText.layoutParams = layoutParams
                 gridLayout.addView(editText)
                 editText.setText(board[i][j].toString())
