@@ -38,7 +38,6 @@ fun PrintTablero(tablero: Array<IntArray>) {
             append(fila.joinToString(", ") + "\n")
         }
     }
-
     Text(text = tableroString)
 }
 
