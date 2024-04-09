@@ -1,5 +1,14 @@
 package com.example.sudoku
 
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import androidx.activity.ComponentActivity
+import com.example.sudoku.Logic.CreateBoard
+import com.example.sudoku.Logic.Randomizer
+import com.example.sudoku.databinding.GameActivityBinding
+
 class menuActivity : ComponentActivity() {
     private lateinit var binding: GameActivityBinding
     private val randomizer = Randomizer()
@@ -11,9 +20,9 @@ class menuActivity : ComponentActivity() {
         setContentView(binding.root)
 
         // Encuentra los botones de dificultad
-        val buttonEasy = findViewById<Button>(R.id.button_easy)
-        val buttonMedium = findViewById<Button>(R.id.button_medium)
-        val buttonHard = findViewById<Button>(R.id.button_hard)
+        val buttonEasy = findViewById<Button>(R.id.easyButton)
+        val buttonMedium = findViewById<Button>(R.id.mediumButton)
+        val buttonHard = findViewById<Button>(R.id.hardButton)
 
         // Establece OnClickListener para cada botón
         buttonEasy.setOnClickListener {
@@ -28,7 +37,27 @@ class menuActivity : ComponentActivity() {
             startGameActivity(Dificultad.DIFICIL)
         }
     }
-    enum class Dificultad {
-        FACIL, MEDIO, DIFICIL
+
+    private fun startGameActivity(dificultad: Dificultad) {
+        // Crea un intent para iniciar la actividad del juego
+        val intent = GameActivity.newIntent(this, dificultad)
+        startActivity(intent)
     }
+}
+
+class GameActivity {
+    companion object {
+        private const val DIFICULTAD = "com.example.sudoku.dificultad"
+
+        fun newIntent(context: Context, dificultad: Dificultad): Intent {
+            val intent = Intent(context, GameActivity::class.java)
+            intent.putExtra(DIFICULTAD, dificultad)
+            return intent
+        }
+    }
+
+}
+
+enum class Dificultad {
+    FACIL, MEDIO, DIFICIL
 }
