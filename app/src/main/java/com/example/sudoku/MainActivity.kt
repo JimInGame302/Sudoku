@@ -18,6 +18,7 @@ import com.example.sudoku.databinding.GameActivityBinding
 
 class MainActivity : ComponentActivity() {
 
+
     val randomizer = Randomizer()
     val createBoard = CreateBoard()
     private lateinit var binding: GameActivityBinding
