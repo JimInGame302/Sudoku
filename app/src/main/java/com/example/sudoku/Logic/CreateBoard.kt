@@ -1,6 +1,7 @@
 package com.example.sudoku.Logic
 
 import android.content.res.Resources
+import android.text.InputType
 import android.widget.EditText
 import android.widget.GridLayout
 import com.example.sudoku.R
@@ -20,7 +21,10 @@ class CreateBoard {
                 layoutParams.columnSpec = GridLayout.spec(j)
                 editText.layoutParams = layoutParams
                 gridLayout.addView(editText)
-                editText.setText(board[i][j].toString())
+                if(board[i][j]!=0){
+                    editText.setText(board[i][j].toString())
+                }
+                editText.inputType = InputType.TYPE_NULL
             }
         }
     }
