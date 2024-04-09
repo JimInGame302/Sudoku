@@ -9,8 +9,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.sudoku.ui.theme.SudokuTheme
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,9 +21,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val tablero = Array(9) { IntArray(9) { 0 } }
-                    randomizer(tablero)
-                    PrintTablero(tablero)
+                    val board = Array(9) { IntArray(9) { 0 } }
+                    PrintTablero(randomizer(board))
                 }
             }
         }
@@ -41,31 +40,27 @@ fun PrintTablero(tablero: Array<IntArray>) {
     Text(text = tableroString)
 }
 
-fun randomizer(tablero: Array<IntArray>) {
-    var i = 0
-    while (i < tablero.size) {
-        var j = 0
-        while (j < tablero[i].size) {
-            val numerosDisponibles = (1..9).toMutableList()
-            tablero[i].forEach { numeroExistente -> numerosDisponibles.remove(numeroExistente) }
-            numerosDisponibles.shuffle()
-            val numero = numerosDisponibles.first()
-            if (verificarNum(tablero, numero, i, j)==true) {
-                tablero[i][j] = numero
-            }
-            j++
-        }
-        i++
-    }
-}
+fun randomizer(board: Array<IntArray>): Array<IntArray> {
 
-fun verificarNum(tablero: Array<IntArray>, numero: Int, fila: Int, columna: Int): Boolean{
-    for (i in 0 until tablero.size){
-        if(tablero[fila][i]!=null) {
-            if (tablero[fila][i] == numero) {
-                return false
-            }
+    for (i in 0 until 9) {
+        for (j in 0 until 9) {
+            board[i][j] = (j * 3 + j / 3 + i) % 9 + 1
         }
     }
-    return true
+
+    for (i in 0 until 100) {
+        val r = Random.nextInt(0, 3)
+        val n1 = r * 3 + Random.nextInt(0, 3)
+        val n2 = r * 3 + Random.nextInt(0, 3)
+        val temp = board[n1]
+        board[n1] = board[n2]
+        board[n2] = temp
+        for (j in 0 until 9) {
+            val temp2 = board[j][n1]
+            board[j][n1] = board[j][n2]
+            board[j][n2] = temp2
+        }
+    }
+
+    return board
 }
